@@ -1,0 +1,9 @@
+/.idea
+/.git*
+/.ropeproject
+/.travis.yml
+/.gitlab-ci.yml
+/README.rst
+/build.sh
+*.pyc
+.DS_Store
