@@ -9,5 +9,6 @@ All the docker images can be retrieved at `Docker Hub <https://hub.docker.com/r/
 Major Packages
 --------------
 
-* OpenSSL
-* Poco
+* OpenSSL 1.1.1
+* Poco 1.9.0
+* Boost 1.68.0

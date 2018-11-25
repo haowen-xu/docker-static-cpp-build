@@ -42,6 +42,18 @@ RUN wget -O /tmp/poco-${POCO_VERSION}-all.tar.gz https://pocoproject.org/release
     cd /tmp && \
     rm -rf /tmp/poco-${POCO_VERSION}-all
 
+# Compile and install the Boost library
+ENV BOOST_VERSION=1.68.0
+RUN wget -O /tmp/boost_${BOOST_VERSION//./_}.tar.gz https://dl.bintray.com/boostorg/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION//./_}.tar.gz && \
+    cd /tmp && \
+    tar xzvf /tmp/boost_${BOOST_VERSION//./_}.tar.gz && \
+    rm /tmp/boost_${BOOST_VERSION//./_}.tar.gz && \
+    cd /tmp/boost_${BOOST_VERSION//./_} && \
+    ./bootstrap.sh && \
+    echo "using gcc : musl : x86_64-alpine-linux-musl-g++ ;" >> project-config.jam && \
+    ./b2 install --build-type=minimal toolset=gcc-musl variant=release link=static threading=multi runtime-link=static && \
+    rm -rf /tmp/boost_${BOOST_VERSION//./_}
+
 # setup the default linker options
 ENV DEFAULT_LINKER_OPTIONS="-static -L/usr/local/lib -lPocoNetSSL -lPocoCrypto -lPocoNet -lPocoZip -lPocoUtil -lPocoXML -lPocoJSON -lPocoFoundation -lpthread -lssl -lcrypto"
 
